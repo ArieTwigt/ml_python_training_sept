@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
-
+import matplotlib.pyplot as plt
 
 # %% import the data
 df = pd.read_csv('data/german_data_clean.csv')
@@ -85,4 +85,12 @@ new_data = pd.DataFrame({
 
 # %%
 lm.predict(new_data[x_columns])
+
+# %% Visualize the quality of the model
+plt.scatter(df_preds['age_years'], 
+            df_preds['actual'])
+
+plt.plot(df_preds['age_years'],df_preds['predicted'])
+
+plt.show()
 # %%
