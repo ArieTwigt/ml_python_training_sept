@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
 
 
 # %% import the data
@@ -32,7 +33,7 @@ df.plot(kind='scatter', x='credit_amount', y='age_years')
 
 
 #%% specify the X and y columns
-x_columns = ['age_years']
+x_columns = ['age_years', 'duration_months']
 y_column = ['credit_amount']
 
 X = df[x_columns]
@@ -58,4 +59,30 @@ for column in x_columns:
 # %% add the actual y-values from the test-set next to the predicted y-values
 df_preds['actual'] = y_test
 df_preds['predicted'] = lm.predict(df_preds[x_columns])
+
+# %% apply the metrics to evaluate the quality of our model
+y_pred = df_preds['predicted']
+
+mae = mean_absolute_error(y_true=y_test, y_pred=y_pred)
+mape = mean_absolute_percentage_error(y_true=y_test, y_pred=y_pred)
+mse = mean_squared_error(y_true=y_test, y_pred=y_pred, squared=True)
+rmse = mean_squared_error(y_true=y_test, y_pred=y_pred, squared=False)
+
+# %%
+model_evaluation_dict = {'mae': mae,
+                         'mape': mape,
+                         'mse': mse,
+                         'rmse': rmse}
+
+model_evaluation_dict
+
+# %% apply a single prediction
+new_data = pd.DataFrame({
+    'age_years': [45],
+    'duration_months': [6]
+}
+)
+
+# %%
+lm.predict(new_data[x_columns])
 # %%
