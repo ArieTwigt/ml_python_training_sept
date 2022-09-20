@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # %% import the data
 df = pd.read_csv('data/german_data_clean.csv')
@@ -33,7 +34,7 @@ df.plot(kind='scatter', x='credit_amount', y='age_years')
 
 
 #%% specify the X and y columns
-x_columns = ['age_years', 'duration_months']
+x_columns = ['age_years']
 y_column = ['credit_amount']
 
 X = df[x_columns]
@@ -90,7 +91,11 @@ lm.predict(new_data[x_columns])
 plt.scatter(df_preds['age_years'], 
             df_preds['actual'])
 
-plt.plot(df_preds['age_years'],df_preds['predicted'])
+plt.plot(df_preds['age_years'],df_preds['predicted'], color="red")
 
 plt.show()
+
+# %% Residual plot
+sns.residplot(x='age_years', y='predicted', data=df_preds)
+
 # %%
