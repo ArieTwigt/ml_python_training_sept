@@ -65,5 +65,5 @@ data['credit_amount'].sum()
 # %%
 data['duration_months'].mean()
 
-# %%
+# %% feature engineering --> Creating additional columns
 data['monthly_payment'] =  data['credit_amount'] / data['duration_months']
